@@ -1,0 +1,196 @@
+-- // Credits to me, myself and I :D
+
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ESPSearcher"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = PlayerGui
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 300, 0, 150)
+MainFrame.Position = UDim2.new(0.5, -150, 0.4, -75)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner", MainFrame)
+UICorner.CornerRadius = UDim.new(0, 6)
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -60, 0, 30)
+Title.Position = UDim2.new(0, 10, 0, 5)
+Title.BackgroundTransparency = 1
+Title.Text = "ESP Searcher"
+Title.TextColor3 = Color3.fromRGB(200, 200, 255)
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 24
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = MainFrame
+
+local CloseButton = Instance.new("TextButton")
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -35, 0, 5)
+CloseButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(255, 100, 100)
+CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.TextSize = 20
+CloseButton.Parent = MainFrame
+
+local SettingsButton = Instance.new("ImageButton")
+SettingsButton.Size = UDim2.new(0, 30, 0, 30)
+SettingsButton.Position = UDim2.new(1, -70, 0, 5)
+SettingsButton.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SettingsButton.Image = "rbxassetid://100360583950712"
+SettingsButton.Parent = MainFrame
+
+local TextBox = Instance.new("TextBox")
+TextBox.Size = UDim2.new(0.8, 0, 0, 30)
+TextBox.Position = UDim2.new(0.1, 0, 0, 50)
+TextBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+TextBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.PlaceholderText = "Enter name to ESP"
+TextBox.TextSize = 20
+TextBox.Parent = MainFrame
+
+local SearchButton = Instance.new("TextButton")
+SearchButton.Size = UDim2.new(0.6, 0, 0, 30)
+SearchButton.Position = UDim2.new(0.2, 0, 0, 100)
+SearchButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+SearchButton.TextColor3 = Color3.fromRGB(200, 200, 255)
+SearchButton.Font = Enum.Font.SourceSansBold
+SearchButton.TextSize = 20
+SearchButton.Text = "Search"
+SearchButton.Parent = MainFrame
+
+local SettingsFrame = Instance.new("Frame")
+SettingsFrame.Size = UDim2.new(0, 200, 0, 150)
+SettingsFrame.Position = UDim2.new(0.5, 350, 0.4, -75)
+SettingsFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+SettingsFrame.BorderSizePixel = 0
+SettingsFrame.Visible = false
+SettingsFrame.Parent = ScreenGui
+
+local UICorner2 = Instance.new("UICorner", SettingsFrame)
+UICorner2.CornerRadius = UDim.new(0, 6)
+
+local SettingsTitle = Instance.new("TextLabel")
+SettingsTitle.Size = UDim2.new(1, -30, 0, 30)
+SettingsTitle.Position = UDim2.new(0, 10, 0, 5)
+SettingsTitle.BackgroundTransparency = 1
+SettingsTitle.Text = "Settings"
+SettingsTitle.TextColor3 = Color3.fromRGB(200, 200, 255)
+SettingsTitle.Font = Enum.Font.SourceSansBold
+SettingsTitle.TextSize = 24
+SettingsTitle.TextXAlignment = Enum.TextXAlignment.Left
+SettingsTitle.Parent = SettingsFrame
+
+local SettingsClose = Instance.new("TextButton")
+SettingsClose.Size = UDim2.new(0, 30, 0, 30)
+SettingsClose.Position = UDim2.new(1, -35, 0, 5)
+SettingsClose.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SettingsClose.Text = "X"
+SettingsClose.TextColor3 = Color3.fromRGB(255, 100, 100)
+SettingsClose.Font = Enum.Font.SourceSansBold
+SettingsClose.TextSize = 20
+SettingsClose.Parent = SettingsFrame
+
+local LoopCheckbox = Instance.new("TextButton")
+LoopCheckbox.Size = UDim2.new(1, -20, 0, 30)
+LoopCheckbox.Position = UDim2.new(0, 10, 0, 50)
+LoopCheckbox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+LoopCheckbox.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoopCheckbox.Font = Enum.Font.SourceSans
+LoopCheckbox.TextSize = 20
+LoopCheckbox.Text = "☐ Loop ESP"
+LoopCheckbox.Parent = SettingsFrame
+
+local WallCheckbox = Instance.new("TextButton")
+WallCheckbox.Size = UDim2.new(1, -20, 0, 30)
+WallCheckbox.Position = UDim2.new(0, 10, 0, 90)
+WallCheckbox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+WallCheckbox.TextColor3 = Color3.fromRGB(255, 255, 255)
+WallCheckbox.Font = Enum.Font.SourceSans
+WallCheckbox.TextSize = 20
+WallCheckbox.Text = "☑️ Wall ESP"
+WallCheckbox.Parent = SettingsFrame
+
+local loopEnabled = false
+local wallEnabled = true
+local searchTerm = ""
+
+local function createESP(target)
+	if target:FindFirstChild("ESP_Highlight") then return end
+	local highlight = Instance.new("Highlight")
+	highlight.Name = "ESP_Highlight"
+	highlight.FillColor = Color3.fromRGB(0, 255, 255)
+	highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+	highlight.DepthMode = wallEnabled and Enum.HighlightDepthMode.AlwaysOnTop or Enum.HighlightDepthMode.Occluded
+	highlight.Parent = target
+end
+
+local function searchAndESP(name)
+	for _, object in ipairs(workspace:GetDescendants()) do
+		if object:IsA("Model") or object:IsA("BasePart") or object:IsA("UnionOperation") then
+			if string.find(string.lower(object.Name), string.lower(name)) then
+				createESP(object)
+			end
+		end
+	end
+end
+
+local openTween = TweenService:Create(SettingsFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0.5, 160, 0.4, -75)})
+local closeTween = TweenService:Create(SettingsFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Position = UDim2.new(0.5, 350, 0.4, -75)})
+
+CloseButton.MouseButton1Click:Connect(function()
+	ScreenGui:Destroy()
+end)
+
+SettingsButton.MouseButton1Click:Connect(function()
+	SettingsFrame.Visible = true
+	openTween:Play()
+end)
+
+SettingsClose.MouseButton1Click:Connect(function()
+	closeTween:Play()
+	task.delay(0.3, function()
+		SettingsFrame.Visible = false
+	end)
+end)
+
+SearchButton.MouseButton1Click:Connect(function()
+	searchTerm = TextBox.Text
+	if searchTerm and searchTerm ~= "" then
+		searchAndESP(searchTerm)
+	end
+end)
+
+LoopCheckbox.MouseButton1Click:Connect(function()
+	loopEnabled = not loopEnabled
+	LoopCheckbox.Text = loopEnabled and "☑️ Loop ESP" or "☐ Loop ESP"
+end)
+
+WallCheckbox.MouseButton1Click:Connect(function()
+	wallEnabled = not wallEnabled
+	WallCheckbox.Text = wallEnabled and "☑️ Wall ESP" or "☐ Wall ESP"
+	for _, v in ipairs(workspace:GetDescendants()) do
+		if v:FindFirstChild("ESP_Highlight") then
+			v.ESP_Highlight.DepthMode = wallEnabled and Enum.HighlightDepthMode.AlwaysOnTop or Enum.HighlightDepthMode.Occluded
+		end
+	end
+end)
+
+task.spawn(function()
+	while task.wait(1) do
+		if loopEnabled and searchTerm ~= "" then
+			searchAndESP(searchTerm)
+		end
+	end
+end)
